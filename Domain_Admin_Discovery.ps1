@@ -7,7 +7,8 @@
 $results=@() # create empty array for the results to go in
 $onlineDCs=@() # create empty array for the online Domain Controllers to go in
 $now=Get-Date # set todays date as a varible - will be used to create the timespan for the 'days ago' attribute
-$DomainAdminMembers=(Get-ADGroup -Identity 'Domain Admins' -Properties members,samaccountname).members # get full DN of all Domain Admin member accounts
+#$DomainAdminMembers=(Get-ADGroup -Identity 'Domain Admins' -Properties members,samaccountname).members # get full DN of all Domain Admin member accounts
+$DomainAdminMembers=(Get-ADGroup -Identity ((get-adgroup -filter * | ? {$_.SID -like '*-512'}).name) -Properties members,samaccountname).members # get full DN of all Domain Admin member accounts
 $DomainControllers=Get-ADDomainController -filter * # get all domain controllers in the local AD domain
 $ADdomain=Get-ADDomain # get local AD domain details
 
